@@ -20,15 +20,31 @@ var reducer = (state = stateDefault, action) => {
   }
 };
 
-var store = redux.createStore(reducer);
-var currentState = store.getState();
+var store = redux.createStore(reducer, redux.compose(
+  window.devToolsExtension ? window.devToolsExtension() : f => f
+));
 
-console.log(currentState);
+store.subscribe(() => {
+  var state = store.getState();
+  document.getElementById('app').innerHTML = state.searchText;
+});
 
-var action = {
+console.log('currentState', store.getState());
+
+
+store.dispatch({
   type: 'CHANGE_SEARCH_TEXT',
-  searchText: 'Ravi'
-};
-store.dispatch(action);
+  searchText: 'dog'
+});
+
+store.dispatch({
+  type: 'CHANGE_SEARCH_TEXT',
+  searchText: 'ravi'
+});
+
+store.dispatch({
+  type: 'CHANGE_SEARCH_TEXT',
+  searchText: '2'
+});
 
 console.log('searchtext change',store.getState());

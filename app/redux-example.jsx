@@ -16,9 +16,19 @@ var reducer = (state = {name: 'anon'}, action) => {
   }
 };
 
-var store = redux.createStore(reducer);
-var currentState = store.getState();
+var store = redux.createStore(reducer, redux.compose(
+  window.devToolsExtension ? window.devToolsExtension() : f => f
+));
 
+var unsubscribe = store.subscribe(() => {
+  var state = store.getState();
+  console.log('Name is '+state.name);
+  document.getElementById('app').innerHTML = state.name;
+});
+
+
+
+var currentState = store.getState();
 console.log(currentState);
 
 var action = {
@@ -26,5 +36,13 @@ var action = {
   name: 'Ravi'
 };
 store.dispatch(action);
+
+var action2 = {
+  type: 'CHANGE_NAME',
+  name: 'kirthi'
+}
+
+store.dispatch(action2);
+
 
 console.log('name change',store.getState());
