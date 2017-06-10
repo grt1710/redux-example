@@ -7,4 +7,4 @@ require('style!css!sass!applicationStyles');
 
 
 
-require('./redux-todo-example.jsx');
+require('./redux-example.jsx');
